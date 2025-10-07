@@ -19,27 +19,27 @@ export const routes: routesType = [
     element: <Home />,
   },
   {
-    path: "/Analytics",
+    path: "/analytics",
     element: <Analytics />,
   },
   {
-    path: "/Sales",
+    path: "/sales",
     element: <Sales />,
   },
   {
-    path: "/Users",
+    path: "/users",
     element: <Users />,
   },
   {
-    path: "/NewUser",
+    path: "/newUser",
     element: <NewUser />,
   },
   {
-    path: "/Products",
+    path: "products",
     element: <Products />,
   },
   {
-    path: "/Product/:id",
+    path: "/product/:id",
     element: <Product />,
   },
 
