@@ -35,7 +35,7 @@ export const routes: routesType = [
     element: <NewUser />,
   },
   {
-    path: "products",
+    path: "/products",
     element: <Products />,
   },
   {
