@@ -1,6 +1,4 @@
-type Props = {}
-
-export default function Analytics({}: Props) {
+export default function Analytics() {
   return (
     <div>Analytics</div>
   )

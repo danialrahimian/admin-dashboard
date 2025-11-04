@@ -1,8 +1,4 @@
-import React from 'react'
-
-type Props = {}
-
-export default function Mail({}: Props) {
+export default function Mail() {
   return (
     <div>Mail</div>
   )

@@ -1,8 +1,4 @@
-import React from 'react'
-
-type Props = {}
-
-export default function Reports({}: Props) {
+export default function Reports() {
   return (
     <div>Reports</div>
   )

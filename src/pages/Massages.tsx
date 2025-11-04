@@ -1,5 +1,3 @@
-type Props = {};
-
-export default function Massages({}: Props) {
+export default function Massages() {
   return <div>Massages</div>;
 }

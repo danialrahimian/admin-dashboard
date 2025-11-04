@@ -31,12 +31,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData({ name, date, amount, status }: lastTransactions) {
-  return { name, date, amount, status };
+function createData({ id, name, date, amount, status }: lastTransactions) {
+  return { id, name, date, amount, status };
 }
 
 const rows = [
   createData({
+    id: 1,
     name: "Ali Connors",
     date: "2025-05-12",
     amount: 6.0,
@@ -46,6 +47,7 @@ const rows = [
     },
   }),
   createData({
+    id: 2,
     name: "Ali Connors",
     date: "2025-05-12",
     amount: 6.0,
@@ -55,6 +57,7 @@ const rows = [
     },
   }),
   createData({
+    id: 3,
     name: "Ali Connors",
     date: "2025-05-12",
     amount: 6.0,
@@ -110,13 +113,14 @@ export default function LastTransactions() {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+            <StyledTableRow key={row.id}>
               <StyledTableCell
                 component="th"
                 sx={{ alignItems: "center" }}
                 scope="row"
               >
                 <Typography
+                  component={"div"}
                   display={"flex"}
                   alignItems={"center"}
                   sx={{

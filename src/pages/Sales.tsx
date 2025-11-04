@@ -1,9 +1,76 @@
-import React from 'react'
+import { Grid, Container, Button } from "@mui/material";
+import SaleStatisticsBox from "../components/SaleStatisticsBox";
+import SalesChart from "../components/SalesChart";
+import type { saleStatisticType } from "../Types/saleStatisticsBox";
+import { useSelector } from "react-redux";
 
-type Props = {}
+export default function Sales() {
+  const saleStatisticData = useSelector((store) => store.saleStatisticReducer);
 
-export default function Sales({}: Props) {
   return (
-    <div>Sales</div>
-  )
+    <Container>
+      <Grid
+        display={"flex"}
+        alignItems={"center"}
+        flexDirection={"column"}
+        mt={5}
+      >
+        <Button
+          sx={{
+            fontFamily: " var(--font-family)",
+            textAlign: "center",
+            border: "2px solid var(--border-color)",
+            width: "300px",
+            padding: "10px",
+            borderRadius: "20px",
+          }}
+        >
+          Sale Statistics
+        </Button>
+      </Grid>
+      <Grid
+        container
+        justifyContent={"center"}
+        spacing={5}
+        mt={2}
+        display={"flex"}
+      >
+        {saleStatisticData.map((saleStatistic: saleStatisticType) => {
+          return (
+            <SaleStatisticsBox
+              id={saleStatistic.id}
+              key={saleStatistic.Title}
+              Title={saleStatistic.Title}
+              PeriodTime={saleStatistic.PeriodTime}
+              Amount={saleStatistic.Amount}
+              Comparison={saleStatistic.Comparison}
+              Time={saleStatistic.Time}
+            ></SaleStatisticsBox>
+          );
+        })}
+      </Grid>
+      <Grid
+        display={"flex"}
+        alignItems={"center"}
+        flexDirection={"column"}
+        mt={10}
+      >
+        <Button
+          sx={{
+            fontFamily: " var(--font-family)",
+            textAlign: "center",
+            border: "2px solid var(--border-color)",
+            width: "300px",
+            padding: "10px",
+            borderRadius: "20px",
+            mb: 2,
+          }}
+        >
+          Sale Chart
+        </Button>
+
+        <SalesChart />
+      </Grid>
+    </Container>
+  );
 }

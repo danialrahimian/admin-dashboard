@@ -1,8 +1,4 @@
-import React from 'react'
-
-type Props = {}
-
-export default function Feedback({}: Props) {
+export default function Feedback() {
   return (
     <div>Feedback</div>
   )

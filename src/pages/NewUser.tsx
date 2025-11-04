@@ -1,8 +1,4 @@
-import React from 'react'
-
-type Props = {}
-
-export default function NewUser({}: Props) {
+export default function NewUser() {
   return (
     <div>NewUser</div>
   )

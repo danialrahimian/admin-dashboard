@@ -1,12 +1,12 @@
 import { Box, Grid, Typography } from "@mui/material";
-import type { saleStatisticsBox } from "../Types/saleStatisticsBox";
+import type { saleStatisticType } from "../Types/saleStatisticsBox";
 export default function SaleStatisticsBox({
   Title,
   PeriodTime,
   Amount,
   Comparison,
   Time,
-}: saleStatisticsBox) {
+}: saleStatisticType) {
   return (
     <Box
       width={"400px"}
@@ -26,15 +26,17 @@ export default function SaleStatisticsBox({
         <Typography fontSize={"20px"} fontFamily={"var(--font-family)"}>
           {Title}
         </Typography>
-        <Typography
-          bgcolor={"#7CB9E8"}
-          fontSize={"15px"}
-          fontFamily={"var(--font-family)"}
-          padding={"5px 10px"}
-          borderRadius={"10px"}
-        >
-          {PeriodTime}
-        </Typography>
+        {PeriodTime ? (
+          <Typography
+            bgcolor={"#7CB9E8"}
+            fontSize={"15px"}
+            fontFamily={"var(--font-family)"}
+            padding={"5px 10px"}
+            borderRadius={"10px"}
+          >
+            {PeriodTime}
+          </Typography>
+        ) : null}
       </Grid>
       <Grid>
         <Typography fontSize={"25px"} fontFamily={"var(--font-family)"}>

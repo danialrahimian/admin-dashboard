@@ -1,8 +1,4 @@
-import React from 'react'
-
-type Props = {}
-
-export default function Manage({}: Props) {
+export default function Manage() {
   return (
     <div>Manage</div>
   )
