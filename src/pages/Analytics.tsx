@@ -1,5 +1,5 @@
 import Grid from "@mui/material/Grid";
-import { Paper, Typography, Divider, Stack } from "@mui/material";
+import { Paper, Typography, Divider } from "@mui/material";
 import StatisticsBox from "../components/StatisticsBox";
 import SaleStatisticsBox from "../components/SaleStatisticsBox";
 import LineChart from "../components/LineChart";

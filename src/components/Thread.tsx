@@ -8,7 +8,6 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useState, useEffect } from "react";
 type Props = {
   thread: {
     id: number;
