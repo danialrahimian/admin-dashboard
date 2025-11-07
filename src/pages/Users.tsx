@@ -1,76 +1,30 @@
-import { Box, Grid, Container, Button } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import { Link } from "react-router";
+import Grid from "@mui/material/Grid";
+import { Box, Container, Button } from "@mui/material";
+import { useCallback } from "react";
+import { selectUsers } from "../Redux/selectors";
 import { DataGrid } from "@mui/x-data-grid";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-
+import type { userType } from "../Types/userTypes";
+import { useAppSelector, useAppDispatch } from "../Redux/hooks";
+import { updateUser } from "../Redux/reducers/userReducer";
+import { removeUser } from "../Redux/reducers/userReducer";
+import { userListColumns } from "../data/userListColumns";
 export default function DataGridDemo() {
-  const userDatas = useSelector((store) => store.userReducer);
-  const [rows, setRows] = useState(userDatas);
-  const removeHandler = (id: number) => {
-    setRows(rows.filter((rows) => rows.id !== id));
-  };
-  const columns: Array<object> = [
-    { field: "id", headerName: "ID", width: 90 },
-    {
-      field: "FullName",
-      headerName: "Full name",
-      description: "This column has a value getter and is not sortable.",
-      sortable: false,
-      width: 160,
-      valueGetter: (_, row) => `${row.firstName || ""} ${row.lastName || ""}`,
+  const dispatch = useAppDispatch();
+  const users = useAppSelector(selectUsers);
+  const handleRemoveUser = useCallback(
+    (id: number) => {
+      dispatch(removeUser(id));
     },
-    {
-      field: "UserName",
-      headerName: "User Name",
-      width: 150,
-      editable: true,
-      valueGetter: (_, row) => `${row.firstName || ""} ${row.Age || ""}`,
+    [dispatch]
+  );
+  const columns = userListColumns(handleRemoveUser);
+  const handleProcessRowUpdate = useCallback(
+    (newRow: userType) => {
+      dispatch(updateUser(newRow));
+      return newRow;
     },
-    {
-      field: "Avatar",
-      headerName: "Avatar",
-      width: 150,
-      editable: false,
-    },
-    {
-      field: "Age",
-      headerName: "Age",
-      type: "number",
-      width: 110,
-      editable: true,
-    },
-    {
-      field: "Status",
-      headerName: "Status",
-      type: "number",
-      width: 110,
-      editable: true,
-    },
-    {
-      field: "Actions",
-      headerName: "Actions",
-
-      width: 150,
-
-      renderCell: (params) => {
-        return (
-          <>
-            <DeleteIcon
-              onClick={() => removeHandler(params.row.id)}
-              sx={{ cursor: " pointer", color: "#D2122E", mr: 2 }}
-            />
-
-            <Link to={`/User/${params.row.id}`}>
-              <EditIcon sx={{ color: "#318CE7" }} />
-            </Link>
-          </>
-        );
-      },
-    },
-  ];
+    [dispatch]
+  );
 
   return (
     <Container>
@@ -96,8 +50,10 @@ export default function DataGridDemo() {
           </Button>
         </Grid>
         <DataGrid
-          rows={rows}
+          rows={users}
           columns={columns}
+          processRowUpdate={handleProcessRowUpdate}
+          onProcessRowUpdateError={() => null}
           initialState={{
             pagination: {
               paginationModel: {
@@ -105,7 +61,7 @@ export default function DataGridDemo() {
               },
             },
           }}
-          pageSizeOptions={[2]}
+          pageSizeOptions={[5]}
           checkboxSelection
           disableRowSelectionOnClick
         />

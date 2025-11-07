@@ -1,26 +1,33 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { productsData } from "../../data/productsData";
-const productsReducer = createSlice({
-  name: "productsReducer",
+import type { productType } from "../../Types/productsType";
+
+type UpdateProductPayload = Partial<Omit<productType, "id">> & {
+  id: productType["id"];
+};
+
+const productsSlice = createSlice({
+  name: "products",
   initialState: productsData,
   reducers: {
-    addSaleStatistics(state, action) {
+    addProduct(state, action: PayloadAction<productType>) {
       state.push(action.payload);
     },
-    removeSaleStatistics(state, action) {
-      state = state.filter((state) => state.id !== action.payload.id);
+    removeProduct(state, action: PayloadAction<productType["id"]>) {
+      return state.filter((product) => product.id !== action.payload);
     },
-    editSaleStatisticsDescribtion(state, action) {
-      state.map((state) => {
-        if (state.id === action.payload.id) {
-          return {
-            ...state,
-            description: action.payload.description,
-          };
-        }
-      });
+    updateProduct(state, action: PayloadAction<UpdateProductPayload>) {
+      const index = state.findIndex(
+        (product) => product.id === action.payload.id
+      );
+      if (index !== -1) {
+        state[index] = { ...state[index], ...action.payload };
+      }
     },
   },
 });
 
-export default productsReducer.reducer;
+export const { addProduct, removeProduct, updateProduct } =
+  productsSlice.actions;
+
+export default productsSlice.reducer;

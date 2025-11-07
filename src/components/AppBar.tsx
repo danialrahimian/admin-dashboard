@@ -4,11 +4,12 @@ import Typography from "@mui/material/Typography";
 import { createTheme } from "@mui/material/styles";
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
-import { useDemoRouter } from "@toolpad/core/internal";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import NAVIGATION from "./layout/layout";
-import { Navigate } from "react-router";
+import { useLocation, useNavigate, Link as RouterLink } from "react-router-dom";
+import { forwardRef, useMemo } from "react";
 import type { ReactNode } from "react";
+import type { LinkProps as ToolpadLinkProps } from "@toolpad/core/shared/Link";
 const demoTheme = createTheme({
   cssVariables: {
     colorSchemeSelector: "data-toolpad-color-scheme",
@@ -45,14 +46,37 @@ DemoPageContent.propTypes = {
   pathname: PropTypes.string.isRequired,
 };
 
-function AppBar({ children }: { children: ReactNode }) {
-  const router = useDemoRouter();
+const ToolpadRouterLink = forwardRef<HTMLAnchorElement, ToolpadLinkProps>(
+  ({ href, history, ...props }, ref) => (
+    <RouterLink
+      ref={ref}
+      to={href}
+      replace={history === "replace"}
+      {...props}
+    />
+  )
+);
+ToolpadRouterLink.displayName = "ToolpadRouterLink";
 
-  // Get the path without leading slash
-  const path = router.pathname.startsWith("/")
-    ? router.pathname.substring(1)
-    : router.pathname;
-  console.log(path);
+function AppBar({ children }: { children: ReactNode }) {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const router = useMemo(
+    () => ({
+      pathname: location.pathname,
+      searchParams: new URLSearchParams(location.search),
+      navigate: (
+        url: string | URL,
+        options?: { history?: "auto" | "push" | "replace" }
+      ) => {
+        const target = typeof url === "string" ? url : url.toString();
+        navigate(target, { replace: options?.history === "replace" });
+      },
+      Link: ToolpadRouterLink,
+    }),
+    [location.pathname, location.search, navigate]
+  );
 
   return (
     <AppProvider
@@ -66,14 +90,7 @@ function AppBar({ children }: { children: ReactNode }) {
       }}
     >
       <DashboardLayout>
-        {children ? (
-          <>
-            {children}
-            <Navigate to={router.pathname.toLocaleLowerCase()} />
-          </>
-        ) : (
-          <DemoPageContent pathname={router.pathname} />
-        )}
+        {children ? children : <DemoPageContent pathname={router.pathname} />}
       </DashboardLayout>
     </AppProvider>
   );

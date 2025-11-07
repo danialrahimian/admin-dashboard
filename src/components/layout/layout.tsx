@@ -24,12 +24,12 @@ const NAVIGATION: Navigation = [
     icon: <HomeOutlinedIcon />,
   },
   {
-    segment: "Analytics",
+    segment: "analytics",
     title: "Analytics",
     icon: <TimelineOutlinedIcon />,
   },
   {
-    segment: "Sales",
+    segment: "sales",
     title: "Sales",
     icon: <AttachMoneyOutlinedIcon />,
   },
@@ -38,29 +38,29 @@ const NAVIGATION: Navigation = [
     title: "Quick Menu",
   },
   {
-    segment: "Users",
+    segment: "users",
     title: "Users",
     icon: <PermIdentityOutlinedIcon />,
   },
   {
-    segment: "NewUser",
+    segment: "newUser",
     title: "New User",
     icon: <PersonAddOutlinedIcon />,
   },
   {
-    segment: "Products",
+    segment: "products",
     title: "Products",
     icon: <StorefrontOutlinedIcon />,
-    pattern: "Product/:ProductId",
+    pattern: "product/:id",
   },
 
   {
-    segment: "Transactions",
+    segment: "transactions",
     title: "Transactions",
     icon: <MonetizationOnOutlinedIcon />,
   },
   {
-    segment: "Reports",
+    segment: "reports",
     title: "Reports",
     icon: <ReportGmailerrorredOutlinedIcon />,
   },
@@ -69,12 +69,12 @@ const NAVIGATION: Navigation = [
     title: "Notifications",
   },
   {
-    segment: "Mail",
+    segment: "mail",
     title: "Mail",
     icon: <EmailOutlinedIcon />,
   },
   {
-    segment: "Feedback",
+    segment: "feedback",
     title: "Feedback",
     icon: <DashboardIcon />,
   },
@@ -88,7 +88,7 @@ const NAVIGATION: Navigation = [
     title: "Staff",
   },
   {
-    segment: "Manage",
+    segment: "manage",
     title: "Manage",
 
     icon: <TuneIcon />,

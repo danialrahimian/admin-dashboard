@@ -9,7 +9,7 @@ export default function SaleStatisticsBox({
 }: saleStatisticType) {
   return (
     <Box
-      width={"400px"}
+      maxWidth={"400px"}
       height={"150px"}
       border={"2px solid var(--border-color)"}
       borderRadius={"10px"}

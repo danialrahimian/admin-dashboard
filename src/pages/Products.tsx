@@ -1,13 +1,38 @@
-import { Box, Grid, Container, Button } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import { productsData } from "../data/productsData";
-import { useState } from "react";
+import Grid from "@mui/material/Grid";
+import { Box, Container, Button } from "@mui/material";
+import { DataGrid, type GridColDef } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
+import type { productType } from "../Types/productsType";
+import { useAppDispatch, useAppSelector } from "../Redux/hooks";
+import { selectProducts } from "../Redux/selectors";
+import {
+  removeProduct,
+  updateProduct,
+} from "../Redux/reducers/productsReducer";
+import { useCallback } from "react";
 
 export default function Products() {
-  const columns = [
+  const dispatch = useAppDispatch();
+  const products = useAppSelector(selectProducts);
+
+  const handleRemoveProduct = useCallback(
+    (id: number) => {
+      dispatch(removeProduct(id));
+    },
+    [dispatch]
+  );
+
+  const handleProcessRowUpdate = useCallback(
+    (newRow: productType) => {
+      dispatch(updateProduct(newRow));
+      return newRow;
+    },
+    [dispatch]
+  );
+
+  const columns: GridColDef<productType>[] = [
     { field: "id", headerName: "ID", width: 90 },
     {
       field: "ProductName",
@@ -44,7 +69,7 @@ export default function Products() {
         return (
           <>
             <DeleteIcon
-              // onClick={() => removeHandler(params.row.id)}
+              onClick={() => handleRemoveProduct(params.row.id)}
               sx={{ cursor: " pointer", color: "#D2122E", mr: 2 }}
             />
             <Link to={`/Product/${params.row.id}`}>
@@ -60,7 +85,6 @@ export default function Products() {
     },
   ];
 
-  const [rows, setRows] = useState(productsData);
   return (
     <Container>
       <Box sx={{ height: 400, maxWidth: "100%" }}>
@@ -85,7 +109,7 @@ export default function Products() {
           </Button>
         </Grid>
         <DataGrid
-          rows={rows}
+          rows={products}
           columns={columns}
           initialState={{
             pagination: {
@@ -97,8 +121,13 @@ export default function Products() {
           pageSizeOptions={[5]}
           checkboxSelection
           disableRowSelectionOnClick
+          processRowUpdate={handleProcessRowUpdate}
+          onProcessRowUpdateError={() => null}
         />
       </Box>
     </Container>
   );
 }
+
+
+

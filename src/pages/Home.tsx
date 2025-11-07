@@ -1,17 +1,16 @@
-import { Container, Grid, Button } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import { Container, Button } from "@mui/material";
 import StatisticsBox from "../components/StatisticsBox";
 import type { statistic } from "../Types/statisticType";
 import LineChart from "../components/LineChart";
 import UserList from "../components/UserList";
 import LastTransactions from "../components/LastTransactions";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../Redux/hooks";
+import { selectStatistics, selectUserChart } from "../Redux/selectors";
 import type { userChartType } from "../Types/userChartTypes";
 export default function Home() {
-  const statistic: statistic[] = useSelector((store) => store.statisticReducer);
-  const userChartData: userChartType = useSelector(
-    (store) => store.userChartReducer
-  );
-  console.log(statistic);
+  const statistics = useAppSelector(selectStatistics);
+  const userChartData: userChartType = useAppSelector(selectUserChart);
 
   return (
     <Container>
@@ -40,7 +39,7 @@ export default function Home() {
           spacing={5}
           justifyContent={"center"}
         >
-          {statistic.map((statistic: statistic) => {
+          {statistics.map((statistic: statistic) => {
             return (
               <StatisticsBox
                 id={statistic.id}
@@ -79,6 +78,7 @@ export default function Home() {
           Mounth={userChartData.Mounth}
           ActiveUsers={userChartData.ActiveUsers}
           NewUers={userChartData.NewUers}
+          height={400}
         />
       </Grid>
       <Grid
@@ -100,15 +100,9 @@ export default function Home() {
         >
           Transactions
         </Button>
-        <Grid
-          display={"flex"}
-          justifyContent={"space-between"}
-          container
-          spacing={4}
-        >
-          <LastTransactions />
-          <UserList />
-        </Grid>
+
+        <LastTransactions />
+        <UserList />
       </Grid>
     </Container>
   );

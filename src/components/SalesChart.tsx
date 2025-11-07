@@ -19,9 +19,9 @@ export default function SalesChart() {
         border: "2px solid var(--border-color)",
         borderRadius: "20px",
         padding: "10px",
-        maxWidth: 1000,
-        height: 500,
+        width: "100%",
       }}
+      height={200}
     />
   );
 }

@@ -1,11 +1,13 @@
-import { Grid, Container, Button } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import { Container, Button } from "@mui/material";
 import SaleStatisticsBox from "../components/SaleStatisticsBox";
 import SalesChart from "../components/SalesChart";
 import type { saleStatisticType } from "../Types/saleStatisticsBox";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../Redux/hooks";
+import { selectSaleStatistics } from "../Redux/selectors";
 
 export default function Sales() {
-  const saleStatisticData = useSelector((store) => store.saleStatisticReducer);
+  const saleStatisticData = useAppSelector(selectSaleStatistics);
 
   return (
     <Container>
@@ -74,3 +76,4 @@ export default function Sales() {
     </Container>
   );
 }
+

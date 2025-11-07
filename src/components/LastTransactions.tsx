@@ -8,8 +8,9 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Avatar from "@mui/material/Avatar";
 import Alert from "@mui/material/Alert";
-import type { lastTransactions } from "../Types/lastTransactions";
 import Typography from "@mui/material/Typography";
+import type { lastTransactions } from "../Types/lastTransactions";
+import { useAppSelector } from "../Redux/hooks";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -31,47 +32,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData({ id, name, date, amount, status }: lastTransactions) {
-  return { id, name, date, amount, status };
-}
-
-const rows = [
-  createData({
-    id: 1,
-    name: "Ali Connors",
-    date: "2025-05-12",
-    amount: 6.0,
-    status: {
-      type: "success",
-      text: "success",
-    },
-  }),
-  createData({
-    id: 2,
-    name: "Ali Connors",
-    date: "2025-05-12",
-    amount: 6.0,
-    status: {
-      type: "success",
-      text: "success",
-    },
-  }),
-  createData({
-    id: 3,
-    name: "Ali Connors",
-    date: "2025-05-12",
-    amount: 6.0,
-    status: {
-      type: "success",
-      text: "success",
-    },
-  }),
-];
-
 export default function LastTransactions() {
+  const transactions = useAppSelector((state) => state.transactions);
+
   return (
     <TableContainer
-      sx={{ minWidth: 650, borderRadius: "20px" }}
+      sx={{ borderRadius: "20px", width: "100%", overflow: "scroll-x" }}
       component={Paper}
     >
       <Table saria-label="customized table">
@@ -112,7 +78,7 @@ export default function LastTransactions() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {transactions.map((row: lastTransactions) => (
             <StyledTableRow key={row.id}>
               <StyledTableCell
                 component="th"

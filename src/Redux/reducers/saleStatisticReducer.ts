@@ -1,26 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { saleStatisticData } from "../../data/saleStatisticData";
-const saleStatisticReducer = createSlice({
-  name: "saleStatisticReducer",
+import type { saleStatisticType } from "../../Types/saleStatisticsBox";
+
+type UpdateSaleStatisticPayload = Partial<Omit<saleStatisticType, "id">> & {
+  id: saleStatisticType["id"];
+};
+
+const saleStatisticSlice = createSlice({
+  name: "saleStatistics",
   initialState: saleStatisticData,
   reducers: {
-    addSaleStatistics(state, action) {
+    addSaleStatistic(state, action: PayloadAction<saleStatisticType>) {
       state.push(action.payload);
     },
-    removeSaleStatistics(state, action) {
-      state = state.filter((state) => state.id !== action.payload.id);
+    removeSaleStatistic(state, action: PayloadAction<saleStatisticType["id"]>) {
+      return state.filter((item) => item.id !== action.payload);
     },
-    editSaleStatisticsDescribtion(state, action) {
-      state.map((state) => {
-        if (state.id === action.payload.id) {
-          return {
-            ...state,
-            description: action.payload.description,
-          };
-        }
-      });
+    updateSaleStatistic(state, action: PayloadAction<UpdateSaleStatisticPayload>) {
+      const index = state.findIndex((item) => item.id === action.payload.id);
+      if (index !== -1) {
+        state[index] = { ...state[index], ...action.payload };
+      }
     },
   },
 });
 
-export default saleStatisticReducer.reducer;
+export const { addSaleStatistic, removeSaleStatistic, updateSaleStatistic } =
+  saleStatisticSlice.actions;
+
+export default saleStatisticSlice.reducer;

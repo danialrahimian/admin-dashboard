@@ -13,7 +13,7 @@ export default function StatisticsBox({
   return (
     <Card
       sx={{
-        width: "300px",
+        minWidth: "300px",
         border: "2px solid var(--border-color)",
         borderRadius: "10px",
       }}

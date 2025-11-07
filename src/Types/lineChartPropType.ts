@@ -7,4 +7,5 @@ export type lineChartPropType = {
   Mounth: mounthType;
   ActiveUsers: activeUsersType;
   NewUers: newUersType;
+  height: number;
 };
